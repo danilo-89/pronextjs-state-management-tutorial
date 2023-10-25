@@ -2,7 +2,7 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 
-import CartProvider from './contexts/CartContext';
+import StoreProvider from '@/store/StoreProvider';
 
 import Header from './components/Header';
 
@@ -32,10 +32,10 @@ export default async function RootLayout({
 	return (
 		<html lang='en'>
 			<body className={inter.className}>
-				<CartProvider cart={cart}>
+				<StoreProvider cart={cart}>
 					<Header clearCartAction={clearCartAction} />
 					<main className='mx-auto max-w-3xl'>{children}</main>
-				</CartProvider>
+				</StoreProvider>
 			</body>
 		</html>
 	);
