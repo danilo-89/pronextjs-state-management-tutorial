@@ -8,7 +8,7 @@ export default function CartPopup({
 }: {
 	clearCartAction: () => Promise<Cart>;
 }) {
-	const [cart, setCart] = useCart();
+	const { cart, setCart } = useCart()();
 
 	return (
 		<div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50'>

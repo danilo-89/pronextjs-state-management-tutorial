@@ -10,7 +10,7 @@ export default function Reviews({
 }: {
 	addReviewAction: (text: string, rating: number) => Promise<Review[]>;
 }) {
-	const [reviews, setReviews] = useReviews();
+	const { reviews, setReviews } = useReviews()();
 	const [reviewText, setReviewText] = useState('');
 	const [reviewRating, setReviewRating] = useState(5);
 

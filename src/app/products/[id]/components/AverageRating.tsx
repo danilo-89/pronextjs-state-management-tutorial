@@ -3,7 +3,7 @@
 import { useReviews } from '@/app/contexts/ReviewsContext';
 
 export default function AverageRating() {
-	const [reviews] = useReviews();
+	const reviews = useReviews()((state) => state.reviews);
 
 	return (
 		<>

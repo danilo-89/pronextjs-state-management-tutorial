@@ -8,7 +8,7 @@ export default function AddToCart({
 }: {
 	addToCartAction: () => Promise<Cart>;
 }) {
-	const [, setCart] = useCart();
+	const setCart = useCart()((state) => state.setCart);
 
 	return (
 		<button
