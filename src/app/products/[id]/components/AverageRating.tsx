@@ -1,22 +1,10 @@
 'use client';
-import { useRef } from 'react';
 import { useStore, useAtomValue } from 'jotai';
 
 import { reviewsAtom } from '@/app/store/atoms';
 
-import { Review } from '@/api/types';
-
-export default function AverageRating({
-	reviews: initialReviews,
-}: {
-	reviews: Review[];
-}) {
+export default function AverageRating() {
 	const store = useStore();
-	const initialized = useRef(false);
-	if (!initialized.current) {
-		store.set(reviewsAtom, initialReviews);
-		initialized.current = true;
-	}
 	const reviews = useAtomValue(reviewsAtom, {
 		store,
 	});

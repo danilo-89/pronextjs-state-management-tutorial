@@ -1,5 +1,5 @@
 'use client';
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { useStore, useAtom } from 'jotai';
 
 import { reviewsAtom } from '@/app/store/atoms';
@@ -7,18 +7,11 @@ import { reviewsAtom } from '@/app/store/atoms';
 import { Review } from '@/api/types';
 
 export default function Reviews({
-	reviews: initialReviews,
 	addReviewAction,
 }: {
-	reviews: Review[];
 	addReviewAction: (text: string, rating: number) => Promise<Review[]>;
 }) {
 	const store = useStore();
-	const initialized = useRef(false);
-	if (!initialized.current) {
-		store.set(reviewsAtom, initialReviews);
-		initialized.current = true;
-	}
 	const [reviews, setReviews] = useAtom(reviewsAtom, {
 		store,
 	});
