@@ -1,5 +1,7 @@
 'use client';
-import { useCart } from '../contexts/CartContext';
+import { useAtom, useStore } from 'jotai';
+
+import { cartAtom } from '../store/atoms';
 
 import { type Cart } from '@/api/types';
 
@@ -8,7 +10,7 @@ export default function CartPopup({
 }: {
 	clearCartAction: () => Promise<Cart>;
 }) {
-	const [cart, setCart] = useCart();
+	const [cart, setCart] = useAtom(cartAtom, { store: useStore() });
 
 	return (
 		<div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50'>

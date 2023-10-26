@@ -2,11 +2,10 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 
-import CartProvider from './contexts/CartContext';
-
 import Header from './components/Header';
 
 import { getCart, clearCart } from '@/api/cart';
+import StoreProvider from './store/StoreProvider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -32,10 +31,10 @@ export default async function RootLayout({
 	return (
 		<html lang='en'>
 			<body className={inter.className}>
-				<CartProvider cart={cart}>
-					<Header clearCartAction={clearCartAction} />
+				<StoreProvider>
+					<Header cart={cart} clearCartAction={clearCartAction} />
 					<main className='mx-auto max-w-3xl'>{children}</main>
-				</CartProvider>
+				</StoreProvider>
 			</body>
 		</html>
 	);

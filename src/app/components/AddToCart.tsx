@@ -1,5 +1,7 @@
 'use client';
-import { useCart } from '../contexts/CartContext';
+import { useStore, useSetAtom } from 'jotai';
+
+import { cartAtom } from '../store/atoms';
 
 import { type Cart } from '@/api/types';
 
@@ -8,7 +10,7 @@ export default function AddToCart({
 }: {
 	addToCartAction: () => Promise<Cart>;
 }) {
-	const [, setCart] = useCart();
+	const setCart = useSetAtom(cartAtom, { store: useStore() });
 
 	return (
 		<button

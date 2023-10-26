@@ -1,19 +1,35 @@
 'use client';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import Link from 'next/link';
+import { useAtomValue, useStore } from 'jotai';
 
-import { useCart } from '../contexts/CartContext';
+import { cartAtom } from '../store/atoms';
 
 import CartPopup from './CartPopup';
 
 import { type Cart } from '@/api/types';
 
 export default function Header({
+	cart: initialCart,
 	clearCartAction,
 }: {
+	cart: Cart;
 	clearCartAction: () => Promise<Cart>;
 }) {
-	const [cart] = useCart();
+	const store = useStore();
+	const loaded = useRef(false);
+
+	// set atom in store
+	// note: another approach here would be to create another client component which would take in children and do the initialization itself before doing any rendering
+	if (!loaded.current) {
+		store.set(cartAtom, initialCart);
+		loaded.current = true;
+	}
+
+	const cart = useAtomValue(cartAtom, {
+		store,
+	});
+
 	const [showCart, setShowCart] = useState(false);
 
 	return (
