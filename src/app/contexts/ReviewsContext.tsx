@@ -1,37 +1,31 @@
 'use client';
-import { ReactNode, createContext, useContext, useState } from 'react';
+import { useState, createContext, useContext } from 'react';
 
-import { type Review } from '@/api/types';
+import { createReviewsStore } from '../../store/store';
 
-const useReviewState = (initialReviews: Review[]) =>
-	useState<Review[]>(initialReviews);
+import { Review } from '@/api/types';
 
-export const ReviewsContext = createContext<ReturnType<
-	typeof useReviewState
-> | null>(null);
+const ReviewsContext = createContext<ReturnType<typeof createReviewsStore>>(
+	null!
+);
+
+export const useReviews = () => {
+	if (!ReviewsContext)
+		throw new Error('useCart must be used within a CartProvider');
+	return useContext(ReviewsContext);
+};
 
 const ReviewsProvider = ({
-	reviews: initialReviews,
+	reviews,
 	children,
 }: {
 	reviews: Review[];
-	children: ReactNode;
+	children: React.ReactNode;
 }) => {
-	const [reviews, setReviews] = useReviewState(initialReviews);
-
+	const [store] = useState(() => createReviewsStore(reviews));
 	return (
-		<ReviewsContext.Provider value={[reviews, setReviews]}>
-			{children}
-		</ReviewsContext.Provider>
+		<ReviewsContext.Provider value={store}>{children}</ReviewsContext.Provider>
 	);
 };
 
 export default ReviewsProvider;
-
-export const useReviews = () => {
-	const reviews = useContext(ReviewsContext);
-	if (!reviews) {
-		throw new Error('useReview must be used within a ReviewProvider');
-	}
-	return reviews;
-};
